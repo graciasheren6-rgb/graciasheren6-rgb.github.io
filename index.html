@@ -9,7 +9,7 @@
 :root{--green:#1f4d36;--dark:#163a29;--orange:#f5a300;--bg:#fbf8f2;--text:#1d1d1d;--muted:#6b6b6b}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Poppins',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:'Poppins',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
 section{padding:70px 0}
@@ -17,26 +17,54 @@ section{padding:70px 0}
 h2{font-size:30px;line-height:1.25;margin-bottom:30px}
 h2 span{color:var(--orange);font-style:italic}
 .c{text-align:center}
-.btn{display:inline-block;padding:11px 24px;border-radius:30px;font-weight:600;font-size:14px;background:var(--green);color:#fff;border:2px solid var(--green)}
+.btn{display:inline-block;padding:11px 24px;border-radius:30px;font-weight:600;font-size:14px;background:var(--green);color:#fff;border:2px solid var(--green);transition:transform .25s,box-shadow .25s,background .25s,color .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(31,77,54,.3)}
 .btn.out{background:transparent;color:var(--green)}
+.btn.out:hover{background:var(--green);color:#fff}
 .btn.or{background:var(--orange);border-color:var(--orange);color:#000}
-nav{position:sticky;top:12px;z-index:10;max-width:1000px;margin:12px auto 0;background:var(--green);border-radius:40px;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+.btn.or:hover{box-shadow:0 8px 20px rgba(245,163,0,.45)}
+
+/* ===== scroll progress bar ===== */
+#progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--orange);z-index:100}
+
+/* ===== glowing orbs ===== */
+.orb{position:fixed;top:0;left:0;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,163,0,.55),rgba(245,163,0,0) 70%);
+  filter:blur(40px);pointer-events:none;z-index:-1;will-change:transform}
+.orb.g{width:420px;height:420px;background:radial-gradient(circle,rgba(31,77,54,.35),rgba(31,77,54,0) 70%);
+  top:18%;left:auto;right:-120px;animation:floaty 9s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,50px)}}
+
+nav{position:sticky;top:12px;z-index:10;max-width:1000px;margin:12px auto 0;background:var(--green);border-radius:40px;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;color:#fff;animation:dropIn .8s ease both}
+@keyframes dropIn{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:none}}
 nav b{font-size:18px}
 nav .links{display:flex;gap:22px;font-size:13px}
+nav .links a{position:relative;transition:color .25s}
+nav .links a::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;background:var(--orange);transition:width .3s}
 nav .links a:hover{color:var(--orange)}
+nav .links a:hover::after{width:100%}
+
 .hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;padding:60px 0 70px}
 .hero .txt{flex:1;min-width:280px}
 .hello{display:inline-block;border:1.5px dashed var(--green);padding:2px 12px;font-size:13px;margin-bottom:14px}
 .hero h1{font-size:40px;line-height:1.2;margin-bottom:14px}
 .hero h1 span{color:var(--orange)}
+.cursor{display:inline-block;width:3px;height:.9em;background:var(--orange);margin-left:3px;vertical-align:-2px;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
 .hero p{color:var(--muted);margin-bottom:24px;max-width:480px}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
-.photo{width:280px;height:280px;border-radius:50%;background:var(--orange);overflow:hidden;margin:0 auto;border:6px solid var(--orange)}
+.photo{width:280px;height:280px;border-radius:50%;background:var(--orange);overflow:hidden;margin:0 auto;border:6px solid var(--orange);transition:transform .4s,box-shadow .4s}
+.photo:hover{transform:scale(1.05) rotate(-2deg);box-shadow:0 15px 40px rgba(245,163,0,.5)}
+.hero .photo{animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:top}
+
 .strip{background:var(--orange);overflow:hidden;white-space:nowrap;padding:14px 0;font-weight:600}
 .strip div{display:inline-block;animation:run 24s linear infinite}
+.strip:hover div{animation-play-state:paused}
 .strip span{margin:0 26px}
 @keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
 .card{background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
 .card .ic{font-size:26px;margin-bottom:10px}
@@ -49,37 +77,110 @@ nav .links a:hover{color:var(--orange)}
 .stats{display:flex;gap:34px;margin-bottom:26px;flex-wrap:wrap}
 .stats b{display:block;font-size:28px;color:var(--orange)}
 .stats small{color:#d9e6de}
+
 .tools{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.tool{background:#fff;border-radius:50px;padding:14px 22px;text-align:center;min-width:110px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.tool{background:#fff;border-radius:50px;padding:14px 22px;text-align:center;min-width:110px;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+.tool:hover{transform:translateY(-8px) scale(1.06);box-shadow:0 12px 25px rgba(245,163,0,.35)}
 .tool b{display:block;font-size:18px;color:var(--green)}
 .tool small{color:var(--muted)}
-.proj{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.thumb{height:130px;background:linear-gradient(135deg,var(--green),var(--dark));display:flex;align-items:center;justify-content:center;color:var(--orange);font-weight:700;font-size:20px;text-align:center;padding:10px}
+
+.proj{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:transform .35s,box-shadow .35s}
+.proj:hover{transform:translateY(-10px);box-shadow:0 18px 35px rgba(31,77,54,.22)}
+.thumb{height:130px;background:linear-gradient(135deg,var(--green),var(--dark));display:flex;align-items:center;justify-content:center;color:var(--orange);font-weight:700;font-size:20px;text-align:center;padding:10px;transition:transform .5s}
+.proj:hover .thumb{transform:scale(1.07)}
+.proj .thumbwrap{overflow:hidden}
 .body{padding:18px}
 .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .pills span{background:var(--orange);font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px}
 .proj h3{font-size:16px;margin-bottom:6px}
 .proj p{font-size:13px;color:var(--muted)}
+
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-.box{background:#fff;border-radius:14px;padding:24px}
+.box{background:#fff;border-radius:14px;padding:24px;transition:transform .3s,box-shadow .3s}
+.box:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.1)}
 .box h3{margin-bottom:14px}
-.item{margin-bottom:14px;padding-left:12px;border-left:3px solid var(--orange)}
+
+/* timeline: garis oranye memanjang saat muncul */
+.item{position:relative;margin-bottom:14px;padding-left:14px}
+.item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);transform:scaleY(0);transform-origin:top;transition:transform .9s ease .2s}
+.item::after{content:"";position:absolute;left:-4px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--orange);transform:scale(0);transition:transform .4s ease .1s}
+.item.show::before{transform:scaleY(1)}
+.item.show::after{transform:scale(1)}
 .item small{color:var(--muted);display:block;font-size:12px}
 .item b{font-size:14px}
 .item p{font-size:13px;color:var(--muted)}
-.award{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.award .m{font-size:28px}
+
+.award{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+.award:hover{transform:translateX(10px);box-shadow:0 10px 25px rgba(245,163,0,.3)}
+.award .m{font-size:28px;transition:transform .4s}
+.award:hover .m{transform:scale(1.35) rotate(12deg)}
 .award b{display:block;font-size:15px}
 .award small{color:var(--orange);font-weight:600}
 .award p{font-size:13px;color:var(--muted)}
+
 .contact{background:var(--green);color:#fff;text-align:center}
 .contact p{color:#d9e6de;margin-bottom:24px}
 .contact .btns{justify-content:center}
 footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-size:12px}
-@media(max-width:700px){nav .links{display:none}.hero h1{font-size:30px}}
+
+/* ===== scroll reveal ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.left{transform:translateX(-50px)}
+.reveal.right{transform:translateX(50px)}
+.reveal.show{opacity:1;transform:none}
+
+/* ===== halaman (klik menu = ganti halaman) ===== */
+.page{display:none;min-height:78vh}
+.page.active{display:block;animation:pageIn .6s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+section.page{padding-top:60px!important}
+.page.about.active,.page.contact.active{display:flex;align-items:center}
+.page.about>.wrap,.page.contact>.wrap{width:100%}
+nav .links a.active{color:var(--orange)}
+nav .links a.active::after{width:100%}
+
+/* ===== tab Education / Organizations ===== */
+.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:26px;flex-wrap:wrap}
+.tab{border:2px solid var(--green);background:transparent;color:var(--green);padding:10px 22px;border-radius:30px;font:600 14px 'Poppins',Arial,sans-serif;cursor:pointer;transition:all .25s}
+.tab:hover{transform:translateY(-3px)}
+.tab.active{background:var(--green);color:#fff;box-shadow:0 8px 20px rgba(31,77,54,.3)}
+.two{grid-template-columns:1fr;max-width:720px;margin:0 auto}
+.box.hide{display:none}
+
+/* ===== detail proyek (popup) ===== */
+.proj{cursor:pointer}
+.proj .more{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--green);transition:color .25s,transform .25s}
+.proj:hover .more{color:var(--orange);transform:translateX(6px)}
+#modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(22,58,41,.7);backdrop-filter:blur(4px)}
+#modal.open{display:flex;animation:fade .3s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.mbox{position:relative;background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.4);animation:pop .4s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.85) translateY(30px)}to{opacity:1;transform:none}}
+.mbox .thumb{height:170px;font-size:26px}
+.mclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:var(--orange);font-size:20px;font-weight:700;cursor:pointer;transition:transform .25s;z-index:2}
+.mclose:hover{transform:rotate(90deg) scale(1.1)}
+.mbody{padding:24px}
+.mbody h3{font-size:20px;margin-bottom:8px}
+.mbody p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mbody ul{list-style:none;margin-bottom:20px}
+.mbody li{font-size:14px;padding:6px 0 6px 22px;position:relative}
+.mbody li::before{content:"✳";position:absolute;left:0;color:var(--orange)}
+.mnav{display:flex;justify-content:space-between;gap:10px}
+.mnav .btn{cursor:pointer;font-family:inherit}
+
+@media(max-width:700px){nav .links{display:none}.hero h1{font-size:30px}.orb{display:none}.orb.g{display:block}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .item::before,.item::after{transform:none}
+}
 </style>
 </head>
 <body>
+
+<div id="progress"></div>
+<div class="orb" id="orb"></div>
+<div class="orb g"></div>
 
 <nav>
   <b>Sheren.</b>
@@ -90,17 +191,18 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
   <a class="btn or" href="#contact">Contact Me</a>
 </nav>
 
-<header class="wrap hero" id="home">
-  <div class="txt">
+<div class="page" id="home">
+<header class="wrap hero">
+  <div class="txt reveal left">
     <div class="hello">Hello There!</div>
-    <h1>I’m <span>Sheren Gracia Theodora</span>, Statistics Student.</h1>
+    <h1>I’m <span>Sheren Gracia Theodora</span>,<br><span id="typing" style="color:var(--text)">Statistics Student.</span><i class="cursor"></i></h1>
     <p>Mahasiswa Statistika ITS yang tertarik mengubah data jadi keputusan yang bermakna, lewat data analysis, machine learning, dan kerja tim di berbagai organisasi.</p>
     <div class="btns">
       <a class="btn" href="#projects">View My Portfolio</a>
       <a class="btn out" href="#contact">Hire Me</a>
     </div>
   </div>
-  <div class="photo"><img src="foto.jpg" alt="Sheren Gracia Theodora"></div>
+  <div class="photo reveal right"><img src="foto.jpg" alt="Sheren Gracia Theodora"></div>
 </header>
 
 <div class="strip"><div>
@@ -110,55 +212,57 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
   <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
 </div></div>
 
-<section id="about" class="about"><div class="wrap in">
-  <div class="photo" style="width:240px;height:240px"><img src="foto.jpg" alt="Sheren"></div>
-  <div class="txt">
+<section id="about" class="about page"><div class="wrap in">
+  <div class="photo reveal left" style="width:240px;height:240px"><img src="foto.jpg" alt="Sheren"></div>
+  <div class="txt reveal right">
     <div class="tag">• About Me</div>
     <h2>Who is <span>Sheren?</span></h2>
     <p>Mahasiswa semester 3 Statistika di Institut Teknologi Sepuluh Nopember (ITS), Surabaya. Aku tertarik memahami kebutuhan stakeholder, membangun relasi profesional, dan ikut proyek yang berdampak secara teknis maupun sosial. Adaptif, proaktif, dan berorientasi hasil. Aku merantau sejak SMA, jadi terbiasa cepat beradaptasi di lingkungan baru.</p>
     <div class="stats">
-      <div><b>3.51</b><small>GPA (36 SKS)</small></div>
-      <div><b>4</b><small>Awards &amp; Finalist</small></div>
-      <div><b>5+</b><small>Organizations</small></div>
+      <div><b data-count="3.51" data-dec="2">3.51</b><small>GPA (36 SKS)</small></div>
+      <div><b data-count="4">4</b><small>Awards &amp; Finalist</small></div>
+      <div><b data-count="5" data-suffix="+">5+</b><small>Organizations</small></div>
     </div>
     <a class="btn or" href="#contact">Get In Touch</a>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <div class="tag c">• Skills</div>
-  <h2 class="c">Tools &amp; <span>Languages</span></h2>
+  <div class="tag c reveal">• Skills</div>
+  <h2 class="c reveal">Tools &amp; <span>Languages</span></h2>
   <div class="tools">
-    <div class="tool"><b>SQL</b><small>Advanced</small></div>
-    <div class="tool"><b>HTML/CSS</b><small>Advanced</small></div>
-    <div class="tool"><b>Python</b><small>Proficient</small></div>
-    <div class="tool"><b>MATLAB</b><small>Proficient</small></div>
-    <div class="tool"><b>Machine Learning</b><small>Proficient</small></div>
-    <div class="tool"><b>English</b><small>IELTS 6.0</small></div>
-    <div class="tool"><b>Chinese</b><small>HSK 3</small></div>
+    <div class="tool reveal" style="transition-delay:.0s"><b>SQL</b><small>Advanced</small></div>
+    <div class="tool reveal" style="transition-delay:.1s"><b>HTML/CSS</b><small>Advanced</small></div>
+    <div class="tool reveal" style="transition-delay:.2s"><b>Python</b><small>Proficient</small></div>
+    <div class="tool reveal" style="transition-delay:.3s"><b>MATLAB</b><small>Proficient</small></div>
+    <div class="tool reveal" style="transition-delay:.4s"><b>Machine Learning</b><small>Proficient</small></div>
+    <div class="tool reveal" style="transition-delay:.5s"><b>English</b><small>IELTS 6.0</small></div>
+    <div class="tool reveal" style="transition-delay:.6s"><b>Chinese</b><small>HSK 3</small></div>
   </div>
 </div></section>
 
-<section id="projects" style="padding-top:0"><div class="wrap">
-  <div class="tag">• My Portfolio</div>
-  <h2>My Latest <span>Projects</span></h2>
+</div>
+
+<section id="projects" class="page" style="padding-top:0"><div class="wrap">
+  <div class="tag reveal">• My Portfolio</div>
+  <h2 class="reveal">My Latest <span>Projects</span></h2>
   <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
-    <div class="proj"><div class="thumb">Stroke Prediction Model</div><div class="body">
+    <div class="proj reveal" data-pts="Dataset sangat tidak seimbang: hanya 4.87% kasus positif|7 model klasifikasi dibandingkan|Penanganan imbalance dengan SMOTE dan scale_pos_weight|XGBoost terbaik dengan ROC-AUC 0.8521|Diinterpretasi dengan SHAP"><div class="thumbwrap"><div class="thumb">Stroke Prediction Model</div></div><div class="body">
       <div class="pills"><span>Machine Learning</span><span>Python</span><span>SHAP</span></div>
       <h3>Class Imbalance Handling</h3>
       <p>Menganalisis dataset stroke yang sangat tidak seimbang (4.87% kasus positif), membandingkan 7 model klasifikasi dengan SMOTE dan scale_pos_weight. XGBoost terbaik dengan ROC-AUC 0.8521, diinterpretasi pakai SHAP.</p>
     </div></div>
-    <div class="proj"><div class="thumb">ReEnerX</div><div class="body">
+    <div class="proj reveal" style="transition-delay:.15s" data-pts="Sistem hybrid PCM-TEG dan ISORC|Sumber panas buangan: flare gas dan data center|Juara 2 Paper &amp; Poster, Society of Petroleum Engineers (Desember 2025)"><div class="thumbwrap"><div class="thumb">ReEnerX</div></div><div class="body">
       <div class="pills"><span>Energy</span><span>Paper &amp; Poster</span></div>
       <h3>Waste Heat Recovery System</h3>
       <p>Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan dari flare gas dan data center. Juara 2 Paper &amp; Poster SPE.</p>
     </div></div>
-    <div class="proj"><div class="thumb">AlgaTech</div><div class="body">
+    <div class="proj reveal" style="transition-delay:.3s" data-pts="Solusi berbasis mikroalga untuk emisi CO2 industri dan limbah cair|Analisis data emisi dari tingkat global sampai Indonesia|Juara 3 Infographic Competition ISECO 2026, UNSOED (Oktober 2026)|Dikerjakan bersama tim Trio Maut"><div class="thumbwrap"><div class="thumb">AlgaTech</div></div><div class="body">
       <div class="pills"><span>Infographic</span><span>Data Analysis</span></div>
       <h3>Microalgae for CO2 Emissions</h3>
       <p>Infografis solusi berbasis mikroalga untuk emisi CO2 industri dan limbah cair, dari analisis data emisi global sampai Indonesia. Juara 3 ISECO 2026.</p>
     </div></div>
-    <div class="proj"><div class="thumb">3S Strategy</div><div class="body">
+    <div class="proj reveal" style="transition-delay:.45s" data-pts="Tata kelola lahan digital untuk konteks ASEAN|Transparansi berbasis blockchain, Geoportal, dan FPIC Tracker|Dilengkapi analisis finansial: NPV, IRR, dan ROI|Finalis ASEAN Case Competition, UGM (Februari 2026)"><div class="thumbwrap"><div class="thumb">3S Strategy</div></div><div class="body">
       <div class="pills"><span>Case Competition</span><span>Financial Model</span></div>
       <h3>Digital Land Governance</h3>
       <p>Framework tata kelola lahan digital untuk ASEAN dengan transparansi berbasis blockchain, Geoportal, dan FPIC Tracker, lengkap dengan NPV, IRR, dan ROI. Finalis ASEAN Case Competition UGM.</p>
@@ -166,26 +270,30 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
   </div>
 </div></section>
 
-<section id="awards" style="padding-top:0"><div class="wrap">
-  <div class="tag c">• Honors &amp; Awards</div>
-  <h2 class="c">My <span>Achievements</span></h2>
-  <div class="award"><div class="m">🥉</div><div><b>Third Place, Infographic Competition (ISECO 2026)</b><small>UNSOED · Oktober 2026</small><p>Tim Trio Maut, dari riset data sampai desain visual “AlgaTech”.</p></div></div>
-  <div class="award"><div class="m">🥈</div><div><b>Second Place, Short Video Competition (BNYC 2026)</b><small>Universitas Brawijaya · September 2026</small><p>Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan.</p></div></div>
-  <div class="award"><div class="m">🥈</div><div><b>First Runner-Up, Paper &amp; Poster (SPE)</b><small>Society of Petroleum Engineers · Desember 2025</small><p>Mengusulkan ReEnerX, sistem hybrid PCM-TEG dan ISORC untuk waste heat recovery.</p></div></div>
-  <div class="award"><div class="m">🏅</div><div><b>Finalist, ASEAN Case Competition</b><small>Universitas Gadjah Mada · Februari 2026</small><p>Mengembangkan “3S Strategy” untuk tata kelola lahan digital di konteks ASEAN.</p></div></div>
+<section id="awards" class="page" style="padding-top:0"><div class="wrap">
+  <div class="tag c reveal">• Honors &amp; Awards</div>
+  <h2 class="c reveal">My <span>Achievements</span></h2>
+  <div class="award reveal left"><div class="m">🥉</div><div><b>Third Place, Infographic Competition (ISECO 2026)</b><small>UNSOED · Oktober 2026</small><p>Tim Trio Maut, dari riset data sampai desain visual “AlgaTech”.</p></div></div>
+  <div class="award reveal right"><div class="m">🥈</div><div><b>Second Place, Short Video Competition (BNYC 2026)</b><small>Universitas Brawijaya · September 2026</small><p>Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan.</p></div></div>
+  <div class="award reveal left"><div class="m">🥈</div><div><b>First Runner-Up, Paper &amp; Poster (SPE)</b><small>Society of Petroleum Engineers · Desember 2025</small><p>Mengusulkan ReEnerX, sistem hybrid PCM-TEG dan ISORC untuk waste heat recovery.</p></div></div>
+  <div class="award reveal right"><div class="m">🏅</div><div><b>Finalist, ASEAN Case Competition</b><small>Universitas Gadjah Mada · Februari 2026</small><p>Mengembangkan “3S Strategy” untuk tata kelola lahan digital di konteks ASEAN.</p></div></div>
 </div></section>
 
-<section id="experience" style="padding-top:0"><div class="wrap">
-  <div class="tag c">• Education &amp; Experience</div>
-  <h2 class="c">My Academic and <span>Organizational</span> Journey</h2>
+<section id="experience" class="page" style="padding-top:0"><div class="wrap">
+  <div class="tag c reveal">• Education &amp; Experience</div>
+  <h2 class="c reveal">My Academic and <span>Organizational</span> Journey</h2>
+  <div class="tabs reveal">
+    <button class="tab active" data-tab="edu">🎓 Education &amp; Training</button>
+    <button class="tab" data-tab="org">💼 Organizations</button>
+  </div>
   <div class="two">
-    <div class="box"><h3>🎓 Education</h3>
+    <div class="box reveal left" data-tab="edu"><h3>🎓 Education</h3>
       <div class="item"><b>Institut Teknologi Sepuluh Nopember (ITS)</b><small>B.S. Statistics · 2025 - 2029</small><p>GPA 3.51/4.00 (36 credits)</p></div>
       <div class="item"><b>SMA Katolik Rajawali Makassar</b><small>2022 - 2025</small><p>Overall grade 92.1, ranking 24</p></div>
       <h3 style="margin-top:20px">📜 Training</h3>
       <div class="item"><b>LKMM-TD</b><small>Mei 2026</small><p>Pelatihan kepemimpinan, kerja tim, dan perencanaan event.</p></div>
     </div>
-    <div class="box"><h3>💼 Organizations</h3>
+    <div class="box reveal right hide" data-tab="org"><h3>💼 Organizations</h3>
       <div class="item"><b>Staff of Sponsorship · SRE ITS</b><small>September 2026</small></div>
       <div class="item"><b>Student Speaker · CommTECH Camp Highlight 2026</b><small>September 2026</small><p>Presentasi 40 menit dalam bahasa Inggris untuk 33 delegasi internasional dari 15+ negara.</p></div>
       <div class="item"><b>Staff of Event Competition · TDC Summit Fest</b><small>Juni - Oktober 2026</small><p>Menyusun konsep, timeline, dan sistem penilaian kompetisi BPC dan BCC.</p></div>
@@ -199,11 +307,11 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
   </div>
 </div></section>
 
-<section class="contact" id="contact"><div class="wrap">
-  <div class="tag">• Contact</div>
-  <h2>Let’s Talk <span>Together</span></h2>
-  <p>Punya proyek, peluang magang, atau mau kolaborasi? Hubungi aku di Surabaya, Jawa Timur.</p>
-  <div class="btns">
+<section class="contact page" id="contact"><div class="wrap">
+  <div class="tag reveal">• Contact</div>
+  <h2 class="reveal">Let’s Talk <span>Together</span></h2>
+  <p class="reveal">Punya proyek, peluang magang, atau mau kolaborasi? Hubungi aku di Surabaya, Jawa Timur.</p>
+  <div class="btns reveal">
     <a class="btn or" href="mailto:graciasheren6@gmail.com">Email</a>
     <a class="btn or" href="https://www.linkedin.com/in/username-linkedin-kamu" target="_blank">LinkedIn</a>
     <a class="btn or" href="https://github.com/graciasheren6-rgb" target="_blank">GitHub</a>
@@ -213,5 +321,175 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
 
 <footer>© 2026 Sheren Gracia Theodora. All Rights Reserved.</footer>
 
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 1. Scroll reveal (kartu, section, dan garis timeline) */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* timeline: tiap item muncul berurutan */
+  document.querySelectorAll('.box').forEach(function(box){
+    box.querySelectorAll('.item').forEach(function(it,i){
+      it.style.transitionDelay = (i*0.12)+'s';
+      it.querySelectorAll('*');
+      it.style.setProperty('--d', (i*0.12)+'s');
+      io.observe(it);
+    });
+  });
+  document.querySelectorAll('.item').forEach(function(it,i){
+    var d=(parseFloat(it.style.getPropertyValue('--d'))||0)+'s';
+    it.style.setProperty('--d',d);
+  });
+
+  /* 2. Orb mengikuti kursor (halus) */
+  var orb = document.getElementById('orb');
+  var tx = innerWidth/2, ty = innerHeight/3, x = tx, y = ty;
+  addEventListener('mousemove', function(e){ tx = e.clientX; ty = e.clientY; });
+  if(!reduce){
+    (function loop(){
+      x += (tx - x)*0.08; y += (ty - y)*0.08;
+      orb.style.transform = 'translate('+(x-170)+'px,'+(y-170)+'px)';
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* 3. Efek ngetik di judul hero */
+  var el = document.getElementById('typing');
+  var words = ['Statistics Student.','Data Enthusiast.','Machine Learning Learner.','Case Competitor.'];
+  if(!reduce){
+    var w=0,c=0,del=false;
+    (function type(){
+      var word = words[w];
+      el.textContent = word.slice(0,c);
+      c += del ? -1 : 1;
+      var wait = del ? 45 : 95;
+      if(!del && c > word.length){ del = true; wait = 1400; }
+      else if(del && c < 0){ del = false; w = (w+1)%words.length; c = 0; wait = 350; }
+      setTimeout(type, wait);
+    })();
+  }
+
+  /* 4. Counter angka statistik */
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var b = e.target, end = parseFloat(b.dataset.count), dec = +b.dataset.dec||0, suf = b.dataset.suffix||'';
+      if(reduce){ cio.unobserve(b); return; }
+      var t0 = performance.now(), dur = 1400;
+      (function step(t){
+        var p = Math.min((t-t0)/dur,1), eased = 1-Math.pow(1-p,3);
+        b.textContent = (end*eased).toFixed(dec) + (p===1?suf:'');
+        if(p<1) requestAnimationFrame(step);
+      })(t0);
+      cio.unobserve(b);
+    });
+  },{threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(b){ cio.observe(b); });
+
+  /* 5. Progress bar scroll */
+  var bar = document.getElementById('progress');
+  addEventListener('scroll', function(){
+    var h = document.documentElement;
+    bar.style.width = (h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  },{passive:true});
+})();
+</script>
+
+<div id="modal" aria-hidden="true">
+  <div class="mbox" role="dialog" aria-modal="true">
+    <button class="mclose" aria-label="Tutup">×</button>
+    <div id="mbody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ===== 1. Ganti halaman lewat menu ===== */
+  var pages = [].slice.call(document.querySelectorAll('.page'));
+  var ids = pages.map(function(p){ return p.id; });
+  var links = document.querySelectorAll('nav .links a');
+  function show(id){
+    if(ids.indexOf(id) < 0) id = 'home';
+    pages.forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#'+id); });
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  function route(){ show(location.hash.replace('#','') || 'home'); }
+  window.addEventListener('hashchange', route);
+  route();
+
+  /* ===== 2. Tab Education / Organizations ===== */
+  var tabs = document.querySelectorAll('.tab');
+  var boxes = document.querySelectorAll('[data-tab].box');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.toggle('active', x === t); });
+      boxes.forEach(function(b){ b.classList.toggle('hide', b.dataset.tab !== t.dataset.tab); });
+    });
+  });
+
+  /* ===== 3. Klik proyek = popup detail ===== */
+  var cards = [].slice.call(document.querySelectorAll('.proj'));
+  var modal = document.getElementById('modal');
+  var mb = document.getElementById('mbody');
+  var cur = 0;
+
+  cards.forEach(function(c, i){
+    var more = document.createElement('span');
+    more.className = 'more';
+    more.textContent = 'Lihat detail →';
+    c.querySelector('.body').appendChild(more);
+    c.tabIndex = 0;
+    c.setAttribute('role', 'button');
+    c.addEventListener('click', function(){ openModal(i); });
+    c.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(i); }
+    });
+  });
+
+  function openModal(i){
+    cur = (i + cards.length) % cards.length;
+    var c = cards[cur];
+    var pts = (c.dataset.pts || '').split('|').map(function(t){ return '<li>'+t+'</li>'; }).join('');
+    mb.innerHTML =
+      '<div class="thumb">'+c.querySelector('.thumb').innerHTML+'</div>'+
+      '<div class="mbody">'+
+        '<div class="pills">'+c.querySelector('.pills').innerHTML+'</div>'+
+        '<h3>'+c.querySelector('h3').innerHTML+'</h3>'+
+        '<p>'+c.querySelector('p').innerHTML+'</p>'+
+        '<ul>'+pts+'</ul>'+
+        '<div class="mnav">'+
+          '<button class="btn out" data-d="-1">← Sebelumnya</button>'+
+          '<button class="btn" data-d="1">Berikutnya →</button>'+
+        '</div>'+
+      '</div>';
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  modal.addEventListener('click', function(e){
+    if(e.target === modal || e.target.classList.contains('mclose')) closeModal();
+    var d = e.target.getAttribute && e.target.getAttribute('data-d');
+    if(d) openModal(cur + parseInt(d, 10));
+  });
+  document.addEventListener('keydown', function(e){
+    if(!modal.classList.contains('open')) return;
+    if(e.key === 'Escape') closeModal();
+    if(e.key === 'ArrowRight') openModal(cur + 1);
+    if(e.key === 'ArrowLeft') openModal(cur - 1);
+  });
+})();
+</script>
 </body>
 </html>
