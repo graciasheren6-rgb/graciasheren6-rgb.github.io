@@ -142,13 +142,8 @@ nav.scrolled{padding:8px 22px;box-shadow:0 10px 28px rgba(0,0,0,.28)}
 #top.on{opacity:1;transform:none;pointer-events:auto}
 #top.on:hover{transform:translateY(-6px) scale(1.08);box-shadow:0 12px 26px rgba(245,163,0,.6)}
 
-/* ===== halaman (klik menu = ganti halaman) ===== */
-.page{display:none;min-height:78vh}
-.page.active{display:block;animation:pageIn .6s ease both}
-@keyframes pageIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-section.page{padding-top:60px!important}
-.page.about.active,.page.contact.active{display:flex;align-items:center}
-.page.about>.wrap,.page.contact>.wrap{width:100%}
+/* ===== satu halaman, scroll antar section ===== */
+section[id]{scroll-margin-top:90px}
 nav .links a.active{color:var(--orange)}
 nav .links a.active::after{width:100%}
 
@@ -181,6 +176,41 @@ nav .links a.active::after{width:100%}
 .mnav{display:flex;justify-content:space-between;gap:10px}
 .mnav .btn{cursor:pointer;font-family:inherit}
 
+/* ===== BARU 1: cincin teks berputar di foto hero ===== */
+.orbit-wrap{position:relative;width:min(360px,85vw);aspect-ratio:1;display:grid;place-items:center;margin:0 auto}
+.orbit-wrap::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(245,163,0,.35),transparent 70%);filter:blur(20px)}
+.ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 30s linear infinite}
+.ring text{font:600 14px 'Poppins',Arial,sans-serif;fill:var(--green)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== BARU 2: planet data di Contact ===== */
+.contact{position:relative;overflow:hidden;padding-bottom:300px}
+.contact .wrap{position:relative;z-index:2}
+.planet{position:absolute;left:50%;bottom:-440px;width:700px;height:700px;margin-left:-350px;border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 25%,rgba(255,255,255,.4),transparent 40%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 2px,transparent 2px 70px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.2) 0 2px,transparent 2px 70px),
+    radial-gradient(circle,#f5a300,#c77d00 70%,#6b4200);
+  background-size:auto,140px 100%,100% 140px,auto;
+  box-shadow:0 0 90px rgba(245,163,0,.55);animation:grid 20s linear infinite}
+.planet::after{content:"";position:absolute;inset:-40px;border-radius:50%;border:2px dashed rgba(245,163,0,.55);animation:spin 45s linear infinite}
+@keyframes grid{to{background-position:0 0,140px 0,0 0,0 0}}
+.sym{position:absolute;z-index:1;color:rgba(245,163,0,.4);font:700 44px 'Poppins',Arial,sans-serif;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-22px) rotate(8deg)}}
+
+/* ===== BARU 3: Spotlight kartu bertumpuk ===== */
+.spot{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:50px;align-items:center}
+.stack{position:relative;height:380px}
+.sc{position:absolute;left:0;top:0;width:280px;height:100%;border-radius:18px;overflow:hidden;cursor:pointer;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s}
+.sc img{width:100%;height:100%;object-fit:cover}
+.sc .cap{position:absolute;left:16px;bottom:14px;right:16px;color:#fff;font-weight:700;font-size:24px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.spot-txt h2{margin-bottom:6px}
+.sbar{height:4px;background:rgba(31,77,54,.15);border-radius:4px;overflow:hidden;max-width:320px}
+.sbar i{display:block;height:100%;width:0;background:var(--orange)}
+@media(max-width:700px){.spot{grid-template-columns:1fr}.stack{width:280px;margin:0 auto}}
+
 @media(max-width:700px){nav .links{display:none}.hero h1{font-size:30px}.orb{display:none}.orb.g{display:block}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -204,7 +234,7 @@ nav .links a.active::after{width:100%}
   <a class="btn or" href="#contact">Contact Me</a>
 </nav>
 
-<div class="page" id="home">
+<div id="home">
 <header class="wrap hero">
   <div class="txt reveal left">
     <div class="hello">Hello There!</div>
@@ -215,7 +245,13 @@ nav .links a.active::after{width:100%}
       <a class="btn out" href="#contact">Hire Me</a>
     </div>
   </div>
-  <div class="photo reveal right"><img src="foto.jpg" alt="Sheren Gracia Theodora"></div>
+  <div class="orbit-wrap reveal right">
+    <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+      <defs><path id="circ" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0"/></defs>
+      <text><textPath href="#circ" textLength="1060" lengthAdjust="spacing">STATISTICS ✳ DATA ANALYSIS ✳ MACHINE LEARNING ✳ CASE COMPETITION ✳ </textPath></text>
+    </svg>
+    <div class="photo"><img src="foto.jpg" alt="Sheren Gracia Theodora"></div>
+  </div>
 </header>
 
 <div class="strip"><div>
@@ -225,7 +261,7 @@ nav .links a.active::after{width:100%}
   <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
 </div></div>
 
-<section id="about" class="about page"><div class="wrap in">
+<section id="about" class="about"><div class="wrap in">
   <div class="photo reveal left" style="width:240px;height:240px"><img src="foto.jpg" alt="Sheren"></div>
   <div class="txt reveal right">
     <div class="tag">• About Me</div>
@@ -256,7 +292,7 @@ nav .links a.active::after{width:100%}
 
 </div>
 
-<section id="projects" class="page" style="padding-top:0"><div class="wrap">
+<section id="projects"><div class="wrap">
   <div class="tag reveal">• My Portfolio</div>
   <h2 class="reveal">My Latest <span>Projects</span></h2>
   <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
@@ -283,7 +319,23 @@ nav .links a.active::after{width:100%}
   </div>
 </div></section>
 
-<section id="awards" class="page" style="padding-top:0"><div class="wrap">
+<section id="spotlight"><div class="wrap spot">
+  <div class="stack reveal left" id="stack">
+    <div class="sc" data-title="AlgaTech" data-meta="Juara 3 · ISECO 2026 · UNSOED" data-desc="Infografis solusi mikroalga untuk emisi CO2 industri dan limbah cair, bersama tim Trio Maut." style="background:linear-gradient(135deg,#1f4d36,#163a29)"><!-- ganti dengan <img src="algatech.jpg" alt=""> --><div class="cap">AlgaTech</div></div>
+    <div class="sc" data-title="BNYC 2026 Video" data-meta="Juara 2 · Universitas Brawijaya" data-desc="Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan." style="background:linear-gradient(135deg,#f5a300,#b86e00)"><div class="cap">BNYC Video</div></div>
+    <div class="sc" data-title="ReEnerX" data-meta="Juara 2 · Paper &amp; Poster SPE" data-desc="Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan flare gas dan data center." style="background:linear-gradient(135deg,#2a6b4b,#1f4d36)"><div class="cap">ReEnerX</div></div>
+    <div class="sc" data-title="3S Strategy" data-meta="Finalis · ASEAN Case Competition UGM" data-desc="Framework tata kelola lahan digital ASEAN dengan blockchain, Geoportal, FPIC Tracker, plus NPV, IRR, dan ROI." style="background:linear-gradient(135deg,#c77d00,#6b4200)"><div class="cap">3S Strategy</div></div>
+  </div>
+  <div class="spot-txt reveal right">
+    <div class="tag">• Spotlight</div>
+    <h2 id="sTitle"></h2>
+    <small id="sMeta" style="color:var(--orange);font-weight:600"></small>
+    <p id="sDesc" style="margin:12px 0 20px;color:var(--muted)"></p>
+    <div class="sbar"><i id="sFill"></i></div>
+  </div>
+</div></section>
+
+<section id="awards"><div class="wrap">
   <div class="tag c reveal">• Honors &amp; Awards</div>
   <h2 class="c reveal">My <span>Achievements</span></h2>
   <div class="award reveal left"><div class="m">🥉</div><div><b>Third Place, Infographic Competition (ISECO 2026)</b><small>UNSOED · Oktober 2026</small><p>Tim Trio Maut, dari riset data sampai desain visual “AlgaTech”.</p></div></div>
@@ -292,7 +344,7 @@ nav .links a.active::after{width:100%}
   <div class="award reveal right"><div class="m">🏅</div><div><b>Finalist, ASEAN Case Competition</b><small>Universitas Gadjah Mada · Februari 2026</small><p>Mengembangkan “3S Strategy” untuk tata kelola lahan digital di konteks ASEAN.</p></div></div>
 </div></section>
 
-<section id="experience" class="page" style="padding-top:0"><div class="wrap">
+<section id="experience"><div class="wrap">
   <div class="tag c reveal">• Education &amp; Experience</div>
   <h2 class="c reveal">My Academic and <span>Organizational</span> Journey</h2>
   <div class="tabs reveal">
@@ -320,7 +372,7 @@ nav .links a.active::after{width:100%}
   </div>
 </div></section>
 
-<section class="contact page" id="contact"><div class="wrap">
+<section class="contact" id="contact"><div class="wrap">
   <div class="tag reveal">• Contact</div>
   <h2 class="reveal">Let’s Talk <span>Together</span></h2>
   <p class="reveal">Punya proyek, peluang magang, atau mau kolaborasi? Hubungi aku di Surabaya, Jawa Timur.</p>
@@ -330,6 +382,11 @@ nav .links a.active::after{width:100%}
     <a class="btn or" href="https://github.com/graciasheren6-rgb" target="_blank">GitHub</a>
     <a class="btn or" href="Cv_sheren.pdf" target="_blank">Download CV</a>
   </div>
+  <span class="sym" style="left:10%;top:18%">μ</span>
+  <span class="sym" style="left:84%;top:25%;animation-delay:1s">σ</span>
+  <span class="sym" style="left:20%;top:62%;animation-delay:2s">∑</span>
+  <span class="sym" style="left:76%;top:58%;animation-delay:3s">π</span>
+  <div class="planet"></div>
 </div></section>
 
 <footer>© 2026 Sheren Gracia Theodora. All Rights Reserved.</footer>
@@ -425,19 +482,21 @@ nav .links a.active::after{width:100%}
 
 <script>
 (function(){
-  /* ===== 1. Ganti halaman lewat menu ===== */
-  var pages = [].slice.call(document.querySelectorAll('.page'));
-  var ids = pages.map(function(p){ return p.id; });
+  /* ===== 1. Menu aktif mengikuti scroll ===== */
+  var ids = ['home','about','projects','awards','experience','contact'];
   var links = document.querySelectorAll('nav .links a');
-  function show(id){
-    if(ids.indexOf(id) < 0) id = 'home';
-    pages.forEach(function(p){ p.classList.toggle('active', p.id === id); });
-    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#'+id); });
-    window.scrollTo({top:0, behavior:'auto'});
+  function spy(){
+    var y = window.scrollY + 160, cur = 'home';
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top + window.scrollY <= y) cur = id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#'+cur);
+    });
   }
-  function route(){ show(location.hash.replace('#','') || 'home'); }
-  window.addEventListener('hashchange', route);
-  route();
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
 
   /* ===== 2. Tab Education / Organizations ===== */
   var tabs = document.querySelectorAll('.tab');
@@ -569,6 +628,34 @@ nav .links a.active::after{width:100%}
       });
     });
   }
+})();
+</script>
+
+<script>
+/* ===== BARU: Spotlight kartu bertumpuk ===== */
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('.sc')), n=cards.length, cur=0, timer;
+  var t=document.getElementById('sTitle'), m=document.getElementById('sMeta'),
+      d=document.getElementById('sDesc'), f=document.getElementById('sFill');
+  function render(){
+    cards.forEach(function(c,i){
+      var o=(i-cur+n)%n;
+      c.style.zIndex=n-o;
+      c.style.opacity=o>3?0:1-o*.22;
+      c.style.transform='translateX('+(o*34)+'px) scale('+(1-o*.06)+')';
+    });
+    var c=cards[cur];
+    t.textContent=c.dataset.title; m.textContent=c.dataset.meta; d.textContent=c.dataset.desc;
+    f.style.transition='none'; f.style.width='0'; void f.offsetWidth;
+    f.style.transition='width 5s linear'; f.style.width='100%';
+    clearTimeout(timer); timer=setTimeout(function(){ go(1); },5000);
+  }
+  function go(s){ cur=(cur+s+n)%n; render(); }
+  cards.forEach(function(c,i){ c.addEventListener('click',function(){ cur=(i===cur)?(cur+1)%n:i; render(); }); });
+  var box=document.getElementById('stack');
+  box.addEventListener('mouseenter',function(){ clearTimeout(timer); });
+  box.addEventListener('mouseleave',render);
+  render();
 })();
 </script>
 </body>
