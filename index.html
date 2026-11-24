@@ -57,7 +57,7 @@ nav .links a:hover::after{width:100%}
 .photo:hover{transform:scale(1.05) rotate(-2deg);box-shadow:0 15px 40px rgba(245,163,0,.5)}
 .hero .photo{animation:bob 5s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:top}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
 
 .strip{background:var(--orange);overflow:hidden;white-space:nowrap;padding:14px 0;font-weight:600}
 .strip div{display:inline-block;animation:run 24s linear infinite}
@@ -100,7 +100,7 @@ nav .links a:hover::after{width:100%}
 .box:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.1)}
 .box h3{margin-bottom:14px}
 
-/* timeline: garis oranye memanjang saat muncul */
+/* timeline */
 .item{position:relative;margin-bottom:14px;padding-left:14px}
 .item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);transform:scaleY(0);transform-origin:top;transition:transform .9s ease .2s}
 .item::after{content:"";position:absolute;left:-4px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--orange);transform:scale(0);transition:transform .4s ease .1s}
@@ -129,7 +129,6 @@ footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-
 .reveal.right{transform:translateX(50px)}
 .reveal.show{opacity:1;transform:none}
 
-/* ===== efek scroll tambahan ===== */
 .reveal.zoom{transform:scale(.75)}
 .reveal.flip{transform:perspective(800px) rotateX(30deg) translateY(40px);transform-origin:top center}
 .reveal.zoom.show,.reveal.flip.show{transform:none}
@@ -142,7 +141,6 @@ nav.scrolled{padding:8px 22px;box-shadow:0 10px 28px rgba(0,0,0,.28)}
 #top.on{opacity:1;transform:none;pointer-events:auto}
 #top.on:hover{transform:translateY(-6px) scale(1.08);box-shadow:0 12px 26px rgba(245,163,0,.6)}
 
-/* ===== satu halaman, scroll antar section ===== */
 section[id]{scroll-margin-top:90px}
 nav .links a.active{color:var(--orange)}
 nav .links a.active::after{width:100%}
@@ -154,6 +152,13 @@ nav .links a.active::after{width:100%}
 .tab.active{background:var(--green);color:#fff;box-shadow:0 8px 20px rgba(31,77,54,.3)}
 .two{grid-template-columns:1fr;max-width:720px;margin:0 auto}
 .box.hide{display:none}
+
+/* ===== foto di Experience ===== */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.gallery figure{margin:0;border-radius:12px;overflow:hidden;background:var(--green)}
+.gallery img{display:block;width:100%;aspect-ratio:16/9;height:auto;object-fit:cover;transition:transform .5s}
+.gallery figure:hover img{transform:scale(1.07)}
+.gallery figcaption{font-size:12px;color:#d9e6de;padding:6px 10px;background:var(--green)}
 
 /* ===== detail proyek (popup) ===== */
 .proj{cursor:pointer}
@@ -176,18 +181,16 @@ nav .links a.active::after{width:100%}
 .mnav{display:flex;justify-content:space-between;gap:10px}
 .mnav .btn{cursor:pointer;font-family:inherit}
 
-/* ===== BARU 1: cincin teks berputar di foto hero ===== */
+/* ===== cincin teks berputar di foto hero ===== */
 .orbit-wrap{position:relative;width:min(360px,85vw);aspect-ratio:1;display:grid;place-items:center;margin:0 auto}
 .orbit-wrap::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(245,163,0,.35),transparent 70%);filter:blur(20px)}
 .ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 30s linear infinite}
 .ring text{font:600 14px 'Poppins',Arial,sans-serif;fill:var(--green)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===== BARU 2: planet data di Contact ===== */
+/* ===== planet data di Contact ===== */
 .contact{position:relative;overflow:hidden;padding-bottom:300px}
-/* FIX: .wrap tidak jadi acuan posisi, jadi planet dihitung dari section .contact */
 .contact .wrap{position:static}
-/* FIX: teks, judul, dan tombol naik di atas planet */
 .contact .reveal{position:relative;z-index:2}
 .planet{position:absolute;left:50%;bottom:-440px;width:700px;height:700px;margin-left:-350px;border-radius:50%;
   background:
@@ -202,13 +205,26 @@ nav .links a.active::after{width:100%}
 .sym{position:absolute;z-index:1;color:rgba(245,163,0,.4);font:700 44px 'Poppins',Arial,sans-serif;animation:fl 6s ease-in-out infinite}
 @keyframes fl{50%{transform:translateY(-22px) rotate(8deg)}}
 
-/* ===== BARU 3: Spotlight kartu bertumpuk ===== */
+/* ===== Dashboard ===== */
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}
+.dash .frame{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.dash iframe{display:block;width:100%;aspect-ratio:4/3;border:0}
+.dash .cap{padding:16px 18px}
+.dash .cap h3{font-size:16px;margin-bottom:4px}
+.dash .cap p{font-size:13px;color:var(--muted);margin-bottom:10px}
+.dash .cap a{font-size:13px;font-weight:600;color:var(--green)}
+.dash .cap a:hover{color:var(--orange)}
+@media(max-width:480px){.dash{grid-template-columns:1fr}}
+
+/* ===== Spotlight kartu bertumpuk ===== */
 .spot{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:50px;align-items:center}
 .stack{position:relative;height:380px}
 .sc{position:absolute;left:0;top:0;width:280px;height:100%;border-radius:18px;overflow:hidden;cursor:pointer;
   box-shadow:0 14px 34px rgba(0,0,0,.22);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s}
-.sc img{width:100%;height:100%;object-fit:cover}
-.sc .cap{position:absolute;left:16px;bottom:14px;right:16px;color:#fff;font-weight:700;font-size:24px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.sc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* gradien gelap supaya teks caption terbaca di atas foto */
+.sc::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.65));pointer-events:none}
+.sc .cap{position:absolute;z-index:1;left:16px;bottom:14px;right:16px;color:#fff;font-weight:700;font-size:24px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
 .spot-txt h2{margin-bottom:6px}
 .sbar{height:4px;background:rgba(31,77,54,.15);border-radius:4px;overflow:hidden;max-width:320px}
 .sbar i{display:block;height:100%;width:0;background:var(--orange)}
@@ -231,7 +247,7 @@ nav .links a.active::after{width:100%}
 <nav>
   <b>Sheren.</b>
   <div class="links">
-    <a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a>
+    <a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#dashboard">Dashboard</a>
     <a href="#awards">Achievements</a><a href="#experience">Experience</a>
   </div>
   <a class="btn or" href="#contact">Contact Me</a>
@@ -314,7 +330,7 @@ nav .links a.active::after{width:100%}
       <h3>Microalgae for CO2 Emissions</h3>
       <p>Infografis solusi berbasis mikroalga untuk emisi CO2 industri dan limbah cair, dari analisis data emisi global sampai Indonesia. Juara 3 ISECO 2026.</p>
     </div></div>
-    <div class="proj reveal" style="transition-delay:.45s" data-pts="Tata kelola lahan digital untuk konteks ASEAN|Transparansi berbasis blockchain, Geoportal, dan FPIC Tracker|Dilengkapi analisis finansial: NPV, IRR, dan ROI|Finalis ASEAN Case Competition, UGM (Februari 2026)"><div class="thumbwrap"><div class="thumb">3S Strategy</div></div><div class="body">
+    <div class="proj reveal" style="transition-delay:.45s" data-pts="Tata kelola lahan digital untuk konteks ASEAN|Transparansi berbasis blockchain, Geoportal, dan FPIC Tracker|Dilengkapi analisis finansial: NPV, IRR, dan ROI|Finalis ASEAN Case Competition, UGM (Februari 2026)"><div class="thumbwrap"><div class="thumb" style="padding:0"><img src="3s-strategy.jpg" alt="3S Strategy" width="1000" height="730" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%"></div></div><div class="body">
       <div class="pills"><span>Case Competition</span><span>Financial Model</span></div>
       <h3>Digital Land Governance</h3>
       <p>Framework tata kelola lahan digital untuk ASEAN dengan transparansi berbasis blockchain, Geoportal, dan FPIC Tracker, lengkap dengan NPV, IRR, dan ROI. Finalis ASEAN Case Competition UGM.</p>
@@ -322,12 +338,35 @@ nav .links a.active::after{width:100%}
   </div>
 </div></section>
 
+<section id="dashboard"><div class="wrap">
+  <div class="tag reveal">• Dashboard</div>
+  <h2 class="reveal">Dashboard <span>Prototypes</span></h2>
+  <div class="dash">
+    <div class="frame reveal left">
+      <iframe src="https://lookerstudio.google.com/embed/reporting/076887f0-5ffb-4cae-b258-7f6a19be5b92" title="Dashboard Prototype 1" loading="lazy" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+      <div class="cap">
+        <h3>Dashboard Prototype 1</h3>
+        <p>Prototype dashboard interaktif yang dibuat dengan Looker Studio.</p>
+        <a href="https://lookerstudio.google.com/reporting/076887f0-5ffb-4cae-b258-7f6a19be5b92" target="_blank" rel="noopener">Buka layar penuh →</a>
+      </div>
+    </div>
+    <div class="frame reveal right">
+      <iframe src="https://lookerstudio.google.com/embed/reporting/7ebd38aa-ac6c-4254-86a4-302da9ce0638" title="Dashboard Prototype 2" loading="lazy" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+      <div class="cap">
+        <h3>Dashboard Prototype 2</h3>
+        <p>Prototype dashboard interaktif yang dibuat dengan Looker Studio.</p>
+        <a href="https://lookerstudio.google.com/reporting/7ebd38aa-ac6c-4254-86a4-302da9ce0638" target="_blank" rel="noopener">Buka layar penuh →</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
 <section id="spotlight"><div class="wrap spot">
   <div class="stack reveal left" id="stack">
-    <div class="sc" data-title="AlgaTech" data-meta="Juara 3 · ISECO 2026 · UNSOED" data-desc="Infografis solusi mikroalga untuk emisi CO2 industri dan limbah cair, bersama tim Trio Maut." style="background:linear-gradient(135deg,#1f4d36,#163a29)"><!-- ganti dengan <img src="algatech.jpg" alt=""> --><div class="cap">AlgaTech</div></div>
-    <div class="sc" data-title="BNYC 2026 Video" data-meta="Juara 2 · Universitas Brawijaya" data-desc="Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan." style="background:linear-gradient(135deg,#f5a300,#b86e00)"><div class="cap">BNYC Video</div></div>
-    <div class="sc" data-title="ReEnerX" data-meta="Juara 2 · Paper &amp; Poster SPE" data-desc="Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan flare gas dan data center." style="background:linear-gradient(135deg,#2a6b4b,#1f4d36)"><div class="cap">ReEnerX</div></div>
-    <div class="sc" data-title="3S Strategy" data-meta="Finalis · ASEAN Case Competition UGM" data-desc="Framework tata kelola lahan digital ASEAN dengan blockchain, Geoportal, FPIC Tracker, plus NPV, IRR, dan ROI." style="background:linear-gradient(135deg,#c77d00,#6b4200)"><div class="cap">3S Strategy</div></div>
+    <div class="sc" data-title="AlgaTech" data-meta="Juara 3 · ISECO 2026 · UNSOED" data-desc="Infografis solusi mikroalga untuk emisi CO2 industri dan limbah cair, bersama tim Trio Maut." style="background:linear-gradient(135deg,#1f4d36,#163a29)"><!-- kalau sudah ada fotonya: <img src="algatech.jpg" alt="AlgaTech"> --><div class="cap">AlgaTech</div></div>
+    <div class="sc" data-title="BNYC 2026 Video" data-meta="Juara 2 · Universitas Brawijaya" data-desc="Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan."><img src="bnyc.jpg" alt="BNYC 2026" width="800" height="1047" style="object-position:50% 65%"><div class="cap">BNYC Video</div></div>
+    <div class="sc" data-title="ReEnerX" data-meta="Juara 2 · Paper &amp; Poster SPE" data-desc="Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan flare gas dan data center." style="background:linear-gradient(135deg,#2a6b4b,#1f4d36)"><!-- kalau sudah ada fotonya: <img src="reenerx.jpg" alt="ReEnerX"> --><div class="cap">ReEnerX</div></div>
+    <div class="sc" data-title="3S Strategy" data-meta="Finalis · ASEAN Case Competition UGM" data-desc="Framework tata kelola lahan digital ASEAN dengan blockchain, Geoportal, FPIC Tracker, plus NPV, IRR, dan ROI."><img src="3s-strategy.jpg" alt="3S Strategy" width="1000" height="730" style="object-position:45% 50%"><div class="cap">3S Strategy</div></div>
   </div>
   <div class="spot-txt reveal right">
     <div class="tag">• Spotlight</div>
@@ -362,6 +401,10 @@ nav .links a.active::after{width:100%}
       <div class="item"><b>LKMM-TD</b><small>Mei 2026</small><p>Pelatihan kepemimpinan, kerja tim, dan perencanaan event.</p></div>
     </div>
     <div class="box reveal right hide" data-tab="org"><h3>💼 Organizations</h3>
+      <div class="gallery">
+        <figure><img src="tdc.jpg" alt="Tim TDC ITS memakai seragam biru" width="1100" height="599" loading="lazy" style="object-position:50% 35%"><figcaption>TDC ITS</figcaption></figure>
+        <figure><img src="kegiatan.jpg" alt="Kebersamaan tim organisasi memakai polo hijau ITS" width="1000" height="723" loading="lazy" style="object-position:50% 45%"><figcaption>Kegiatan organisasi</figcaption></figure>
+      </div>
       <div class="item"><b>Staff of Sponsorship · SRE ITS</b><small>September 2026</small></div>
       <div class="item"><b>Student Speaker · CommTECH Camp Highlight 2026</b><small>September 2026</small><p>Presentasi 40 menit dalam bahasa Inggris untuk 33 delegasi internasional dari 15+ negara.</p></div>
       <div class="item"><b>Staff of Event Competition · TDC Summit Fest</b><small>Juni - Oktober 2026</small><p>Menyusun konsep, timeline, dan sistem penilaian kompetisi BPC dan BCC.</p></div>
@@ -398,7 +441,7 @@ nav .links a.active::after{width:100%}
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* 1. Scroll reveal (kartu, section, dan garis timeline) */
+  /* 1. Scroll reveal */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
@@ -410,17 +453,12 @@ nav .links a.active::after{width:100%}
   document.querySelectorAll('.box').forEach(function(box){
     box.querySelectorAll('.item').forEach(function(it,i){
       it.style.transitionDelay = (i*0.12)+'s';
-      it.querySelectorAll('*');
       it.style.setProperty('--d', (i*0.12)+'s');
       io.observe(it);
     });
   });
-  document.querySelectorAll('.item').forEach(function(it,i){
-    var d=(parseFloat(it.style.getPropertyValue('--d'))||0)+'s';
-    it.style.setProperty('--d',d);
-  });
 
-  /* 2. Orb mengikuti kursor (halus) */
+  /* 2. Orb mengikuti kursor */
   var orb = document.getElementById('orb');
   var tx = innerWidth/2, ty = innerHeight/3, x = tx, y = ty;
   addEventListener('mousemove', function(e){ tx = e.clientX; ty = e.clientY; });
@@ -485,8 +523,8 @@ nav .links a.active::after{width:100%}
 
 <script>
 (function(){
-  /* ===== 1. Menu aktif mengikuti scroll ===== */
-  var ids = ['home','about','projects','awards','experience','contact'];
+  /* 1. Menu aktif mengikuti scroll */
+  var ids = ['home','about','projects','dashboard','awards','experience','contact'];
   var links = document.querySelectorAll('nav .links a');
   function spy(){
     var y = window.scrollY + 160, cur = 'home';
@@ -501,7 +539,7 @@ nav .links a.active::after{width:100%}
   window.addEventListener('scroll', spy, {passive:true});
   spy();
 
-  /* ===== 2. Tab Education / Organizations ===== */
+  /* 2. Tab Education / Organizations */
   var tabs = document.querySelectorAll('.tab');
   var boxes = document.querySelectorAll('[data-tab].box');
   tabs.forEach(function(t){
@@ -511,7 +549,7 @@ nav .links a.active::after{width:100%}
     });
   });
 
-  /* ===== 3. Klik proyek = popup detail ===== */
+  /* 3. Klik proyek = popup detail */
   var cards = [].slice.call(document.querySelectorAll('.proj'));
   var modal = document.getElementById('modal');
   var mb = document.getElementById('mbody');
@@ -534,8 +572,9 @@ nav .links a.active::after{width:100%}
     cur = (i + cards.length) % cards.length;
     var c = cards[cur];
     var pts = (c.dataset.pts || '').split('|').map(function(t){ return '<li>'+t+'</li>'; }).join('');
+    var th = c.querySelector('.thumb');
     mb.innerHTML =
-      '<div class="thumb">'+c.querySelector('.thumb').innerHTML+'</div>'+
+      '<div class="thumb"'+(th.querySelector('img') ? ' style="padding:0"' : '')+'>'+th.innerHTML+'</div>'+
       '<div class="mbody">'+
         '<div class="pills">'+c.querySelector('.pills').innerHTML+'</div>'+
         '<h3>'+c.querySelector('h3').innerHTML+'</h3>'+
@@ -573,7 +612,6 @@ nav .links a.active::after{width:100%}
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* variasi arah muncul: skill = zoom, kartu proyek = flip */
   document.querySelectorAll('.tool').forEach(function(t){ t.classList.add('zoom'); });
   document.querySelectorAll('.proj').forEach(function(p){ p.classList.add('flip'); });
 
@@ -587,10 +625,10 @@ nav .links a.active::after{width:100%}
 
   function onScroll(){
     var y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 40);          /* navbar mengecil + bayangan */
-    topBtn.classList.toggle('on', y > 400);            /* tombol naik ke atas muncul */
+    nav.classList.toggle('scrolled', y > 40);
+    topBtn.classList.toggle('on', y > 400);
     if(!reduce){
-      parallax.forEach(function(p){                    /* foto bergeser beda kecepatan */
+      parallax.forEach(function(p){
         if(p.el) p.el.style.translate = '0 ' + (y * p.s) + 'px';
       });
       rate = Math.min(1 + Math.abs(y - lastY) * 0.15, 8);
@@ -604,7 +642,6 @@ nav .links a.active::after{width:100%}
     window.scrollTo({top:0, behavior:'smooth'});
   });
 
-  /* strip "Data Analysis ✳ ..." ngebut saat scroll cepat, lalu pelan lagi */
   if(!reduce && strip && strip.getAnimations){
     (function tick(){
       var a = strip.getAnimations()[0];
@@ -614,7 +651,6 @@ nav .links a.active::after{width:100%}
     })();
   }
 
-  /* kartu proyek miring 3D mengikuti kursor */
   if(!reduce && window.matchMedia('(hover:hover)').matches){
     document.querySelectorAll('.proj').forEach(function(c){
       c.addEventListener('mousemove', function(e){
@@ -635,7 +671,7 @@ nav .links a.active::after{width:100%}
 </script>
 
 <script>
-/* ===== BARU: Spotlight kartu bertumpuk ===== */
+/* Spotlight kartu bertumpuk */
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.sc')), n=cards.length, cur=0, timer;
   var t=document.getElementById('sTitle'), m=document.getElementById('sMeta'),
