@@ -153,13 +153,6 @@ nav .links a.active::after{width:100%}
 .two{grid-template-columns:1fr;max-width:720px;margin:0 auto}
 .box.hide{display:none}
 
-/* ===== foto di Experience ===== */
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
-.gallery figure{margin:0;border-radius:12px;overflow:hidden;background:var(--green)}
-.gallery img{display:block;width:100%;aspect-ratio:16/9;height:auto;object-fit:cover;transition:transform .5s}
-.gallery figure:hover img{transform:scale(1.07)}
-.gallery figcaption{font-size:12px;color:#d9e6de;padding:6px 10px;background:var(--green)}
-
 /* ===== detail proyek (popup) ===== */
 .proj{cursor:pointer}
 .proj .more{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--green);transition:color .25s,transform .25s}
@@ -222,13 +215,39 @@ nav .links a.active::after{width:100%}
 .sc{position:absolute;left:0;top:0;width:280px;height:100%;border-radius:18px;overflow:hidden;cursor:pointer;
   box-shadow:0 14px 34px rgba(0,0,0,.22);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s}
 .sc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* gradien gelap supaya teks caption terbaca di atas foto */
 .sc::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.65));pointer-events:none}
 .sc .cap{position:absolute;z-index:1;left:16px;bottom:14px;right:16px;color:#fff;font-weight:700;font-size:24px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
 .spot-txt h2{margin-bottom:6px}
 .sbar{height:4px;background:rgba(31,77,54,.15);border-radius:4px;overflow:hidden;max-width:320px}
 .sbar i{display:block;height:100%;width:0;background:var(--orange)}
 @media(max-width:700px){.spot{grid-template-columns:1fr}.stack{width:280px;margin:0 auto}}
+
+/* ===== Gallery + popup foto ===== */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.gi{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;background:var(--green);box-shadow:0 2px 10px rgba(0,0,0,.08);transition:opacity .8s ease,transform .35s,box-shadow .35s}
+.gi img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gi::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.72));pointer-events:none}
+.gi:hover{transform:translateY(-8px);box-shadow:0 18px 35px rgba(31,77,54,.25)}
+.gi:hover img{transform:scale(1.07)}
+.gi .gc{position:absolute;z-index:1;left:14px;right:14px;bottom:12px;color:#fff}
+.gi .gc b{display:block;font-size:15px;line-height:1.3}
+.gi .gc small{font-size:12px;color:var(--orange);font-weight:600}
+#pmodal{position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(22,58,41,.75);backdrop-filter:blur(4px)}
+#pmodal.open{display:flex;animation:fade .3s ease both}
+.pbox{position:relative;background:#fff;border-radius:20px;max-width:620px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.4);animation:pop .4s cubic-bezier(.2,1.2,.4,1) both}
+.pimg{background:#111;display:flex;justify-content:center}
+.pimg img{display:block;max-width:100%;max-height:55vh;object-fit:contain}
+.pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:var(--orange);font-size:20px;font-weight:700;cursor:pointer;z-index:2;transition:transform .25s}
+.pclose:hover{transform:rotate(90deg) scale(1.1)}
+.pbody{padding:22px 24px 24px}
+.pbody small{color:var(--orange);font-weight:600}
+.pbody h3{font-size:20px;margin:4px 0 8px}
+.pbody p{font-size:14px;color:var(--muted);margin-bottom:12px}
+.pbody ul{list-style:none;margin-bottom:18px}
+.pbody li{font-size:14px;padding:5px 0 5px 22px;position:relative}
+.pbody li::before{content:"✳";position:absolute;left:0;color:var(--orange)}
+.pbody .mnav{display:flex;justify-content:space-between;gap:10px}
+.pbody .btn{cursor:pointer;font-family:inherit}
 
 @media(max-width:700px){nav .links{display:none}.hero h1{font-size:30px}.orb{display:none}.orb.g{display:block}}
 @media(prefers-reduced-motion:reduce){
@@ -248,7 +267,7 @@ nav .links a.active::after{width:100%}
   <b>Sheren.</b>
   <div class="links">
     <a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#dashboard">Dashboard</a>
-    <a href="#awards">Achievements</a><a href="#experience">Experience</a>
+    <a href="#awards">Achievements</a><a href="#gallery">Gallery</a><a href="#experience">Experience</a>
   </div>
   <a class="btn or" href="#contact">Contact Me</a>
 </nav>
@@ -320,7 +339,7 @@ nav .links a.active::after{width:100%}
       <h3>Class Imbalance Handling</h3>
       <p>Menganalisis dataset stroke yang sangat tidak seimbang (4.87% kasus positif), membandingkan 7 model klasifikasi dengan SMOTE dan scale_pos_weight. XGBoost terbaik dengan ROC-AUC 0.8521, diinterpretasi pakai SHAP.</p>
     </div></div>
-    <div class="proj reveal" style="transition-delay:.15s" data-pts="Sistem hybrid PCM-TEG dan ISORC|Sumber panas buangan: flare gas dan data center|Juara 2 Paper &amp; Poster, Society of Petroleum Engineers (Desember 2025)"><div class="thumbwrap"><div class="thumb">ReEnerX</div></div><div class="body">
+    <div class="proj reveal" style="transition-delay:.15s" data-pts="Sistem hybrid PCM-TEG dan ISORC|Sumber panas buangan: flare gas dan data center|Juara 2 Paper &amp; Poster, Society of Petroleum Engineers (Desember 2025)"><div class="thumbwrap"><div class="thumb" style="padding:0"><img src="Paper%20and%20poster.jpeg" alt="ReEnerX" width="1236" height="1600" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 70%"></div></div><div class="body">
       <div class="pills"><span>Energy</span><span>Paper &amp; Poster</span></div>
       <h3>Waste Heat Recovery System</h3>
       <p>Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan dari flare gas dan data center. Juara 2 Paper &amp; Poster SPE.</p>
@@ -365,7 +384,7 @@ nav .links a.active::after{width:100%}
   <div class="stack reveal left" id="stack">
     <div class="sc" data-title="AlgaTech" data-meta="Juara 3 · ISECO 2026 · UNSOED" data-desc="Infografis solusi mikroalga untuk emisi CO2 industri dan limbah cair, bersama tim Trio Maut." style="background:linear-gradient(135deg,#1f4d36,#163a29)"><!-- kalau sudah ada fotonya: <img src="algatech.jpg" alt="AlgaTech"> --><div class="cap">AlgaTech</div></div>
     <div class="sc" data-title="BNYC 2026 Video" data-meta="Juara 2 · Universitas Brawijaya" data-desc="Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan."><img src="bnyc.jpg" alt="BNYC 2026" width="800" height="1047" style="object-position:50% 65%"><div class="cap">BNYC Video</div></div>
-    <div class="sc" data-title="ReEnerX" data-meta="Juara 2 · Paper &amp; Poster SPE" data-desc="Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan flare gas dan data center." style="background:linear-gradient(135deg,#2a6b4b,#1f4d36)"><!-- kalau sudah ada fotonya: <img src="reenerx.jpg" alt="ReEnerX"> --><div class="cap">ReEnerX</div></div>
+    <div class="sc" data-title="ReEnerX" data-meta="Juara 2 · Paper &amp; Poster SPE" data-desc="Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan flare gas dan data center."><img src="Paper%20and%20poster.jpeg" alt="ReEnerX" width="1236" height="1600" style="object-position:50% 70%"><div class="cap">ReEnerX</div></div>
     <div class="sc" data-title="3S Strategy" data-meta="Finalis · ASEAN Case Competition UGM" data-desc="Framework tata kelola lahan digital ASEAN dengan blockchain, Geoportal, FPIC Tracker, plus NPV, IRR, dan ROI."><img src="3s-strategy.jpg" alt="3S Strategy" width="1000" height="730" style="object-position:45% 50%"><div class="cap">3S Strategy</div></div>
   </div>
   <div class="spot-txt reveal right">
@@ -386,6 +405,22 @@ nav .links a.active::after{width:100%}
   <div class="award reveal right"><div class="m">🏅</div><div><b>Finalist, ASEAN Case Competition</b><small>Universitas Gadjah Mada · Februari 2026</small><p>Mengembangkan “3S Strategy” untuk tata kelola lahan digital di konteks ASEAN.</p></div></div>
 </div></section>
 
+<section id="gallery"><div class="wrap">
+  <div class="tag c reveal">• Gallery</div>
+  <h2 class="c reveal">Moments &amp; <span>Memories</span></h2>
+  <div class="gal">
+    <div class="gi reveal" data-title="Juara 2 Paper &amp; Poster · ReEnerX" data-meta="PETROLEAGUE 2025 · SPE ITS · Desember 2025" data-desc="Foto bersama setelah menerima penghargaan 1st Runner Up di PETROLEAGUE 2025, kompetisi internal tahunan SPE ITS." data-pts="Mengusulkan ReEnerX: sistem hybrid PCM-TEG dan ISORC|Memanfaatkan panas buangan dari flare gas dan data center|Kategori Paper &amp; Poster Competition"><img src="Paper%20and%20poster.jpeg" alt="Penghargaan 1st Runner Up PETROLEAGUE 2025" loading="lazy" style="object-position:50% 70%"><div class="gc"><b>ReEnerX</b><small>Juara 2 · SPE</small></div></div>
+
+    <div class="gi reveal" data-title="Juara 2 Short Video Competition" data-meta="BNYC 2026 · Universitas Brawijaya · September 2026" data-desc="Video bertema Impactful Business pada Brawijaya National Youth Competition, mengusung inovasi untuk ekonomi inklusif dan berkelanjutan." data-pts="Tema: Youth Innovation for Indonesia's Future|Kategori Short Video Competition|Diselenggarakan Fakultas Ilmu Administrasi, Universitas Brawijaya"><img src="bnyc.jpg" alt="Juara 2 BNYC 2026" loading="lazy" style="object-position:50% 65%"><div class="gc"><b>BNYC Video</b><small>Juara 2 · UB</small></div></div>
+
+    <div class="gi reveal" data-title="3S Strategy · ASEAN Case Competition" data-meta="Finalis · Universitas Gadjah Mada · Februari 2026" data-desc="Framework tata kelola lahan digital untuk konteks ASEAN, dilengkapi analisis finansial." data-pts="Transparansi berbasis blockchain, Geoportal, dan FPIC Tracker|Analisis finansial: NPV, IRR, dan ROI|Lolos sebagai finalis"><img src="3s-strategy.jpg" alt="Tim 3S Strategy di ASEAN Case Competition" loading="lazy" style="object-position:45% 50%"><div class="gc"><b>3S Strategy</b><small>Finalis · UGM</small></div></div>
+
+    <div class="gi reveal" data-title="TDC ITS" data-meta="Staff of Corporation · Februari 2026 - sekarang" data-desc="Foto bersama keluarga TDC ITS, organisasi tempat aku aktif sejak September 2025." data-pts="Member (Sep 2025 - Jan 2026)|Staff of Corporation (Feb 2026 - sekarang)|Staff of Berkas, Kakak Bimbingan, dan Staff of Event Competition TDC Summit Fest"><img src="tdc.jpg" alt="Tim TDC ITS" loading="lazy" style="object-position:50% 35%"><div class="gc"><b>TDC ITS</b><small>Organisasi</small></div></div>
+
+    <div class="gi reveal" data-title="Kebersamaan Tim Organisasi" data-meta="Kegiatan organisasi" data-desc="Momen kebersamaan dengan tim saat kegiatan organisasi, memakai polo hijau ITS." data-pts="Kerja tim lintas divisi|Pengalaman event, logistik, dan kompetisi"><img src="kegiatan.jpg" alt="Kebersamaan tim organisasi" loading="lazy" style="object-position:50% 45%"><div class="gc"><b>Kegiatan Organisasi</b><small>Teamwork</small></div></div>
+  </div>
+</div></section>
+
 <section id="experience"><div class="wrap">
   <div class="tag c reveal">• Education &amp; Experience</div>
   <h2 class="c reveal">My Academic and <span>Organizational</span> Journey</h2>
@@ -401,10 +436,6 @@ nav .links a.active::after{width:100%}
       <div class="item"><b>LKMM-TD</b><small>Mei 2026</small><p>Pelatihan kepemimpinan, kerja tim, dan perencanaan event.</p></div>
     </div>
     <div class="box reveal right hide" data-tab="org"><h3>💼 Organizations</h3>
-      <div class="gallery">
-        <figure><img src="tdc.jpg" alt="Tim TDC ITS memakai seragam biru" width="1100" height="599" loading="lazy" style="object-position:50% 35%"><figcaption>TDC ITS</figcaption></figure>
-        <figure><img src="kegiatan.jpg" alt="Kebersamaan tim organisasi memakai polo hijau ITS" width="1000" height="723" loading="lazy" style="object-position:50% 45%"><figcaption>Kegiatan organisasi</figcaption></figure>
-      </div>
       <div class="item"><b>Staff of Sponsorship · SRE ITS</b><small>September 2026</small></div>
       <div class="item"><b>Student Speaker · CommTECH Camp Highlight 2026</b><small>September 2026</small><p>Presentasi 40 menit dalam bahasa Inggris untuk 33 delegasi internasional dari 15+ negara.</p></div>
       <div class="item"><b>Staff of Event Competition · TDC Summit Fest</b><small>Juni - Oktober 2026</small><p>Menyusun konsep, timeline, dan sistem penilaian kompetisi BPC dan BCC.</p></div>
@@ -524,7 +555,7 @@ nav .links a.active::after{width:100%}
 <script>
 (function(){
   /* 1. Menu aktif mengikuti scroll */
-  var ids = ['home','about','projects','dashboard','awards','experience','contact'];
+  var ids = ['home','about','projects','dashboard','awards','gallery','experience','contact'];
   var links = document.querySelectorAll('nav .links a');
   function spy(){
     var y = window.scrollY + 160, cur = 'home';
@@ -695,6 +726,61 @@ nav .links a.active::after{width:100%}
   box.addEventListener('mouseenter',function(){ clearTimeout(timer); });
   box.addEventListener('mouseleave',render);
   render();
+})();
+</script>
+
+<!-- Popup foto Gallery -->
+<div id="pmodal" aria-hidden="true">
+  <div class="pbox" role="dialog" aria-modal="true">
+    <button class="pclose" aria-label="Tutup">×</button>
+    <div class="pimg"><img id="pImg" alt=""></div>
+    <div class="pbody">
+      <small id="pMeta"></small>
+      <h3 id="pTitle"></h3>
+      <p id="pDesc"></p>
+      <ul id="pList"></ul>
+      <div class="mnav">
+        <button class="btn out" data-d="-1">← Sebelumnya</button>
+        <button class="btn" data-d="1">Berikutnya →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var items=[].slice.call(document.querySelectorAll('.gi'));
+  var m=document.getElementById('pmodal'), cur=0;
+  var img=document.getElementById('pImg'), ti=document.getElementById('pTitle'),
+      me=document.getElementById('pMeta'), de=document.getElementById('pDesc'), li=document.getElementById('pList');
+  function show(i){
+    cur=(i+items.length)%items.length;
+    var g=items[cur], im=g.querySelector('img');
+    img.src=im.getAttribute('src'); img.alt=im.alt;
+    ti.textContent=g.dataset.title; me.textContent=g.dataset.meta; de.textContent=g.dataset.desc;
+    li.innerHTML='';
+    (g.dataset.pts||'').split('|').forEach(function(t){
+      if(!t) return; var e=document.createElement('li'); e.textContent=t; li.appendChild(e);
+    });
+    m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+  }
+  function close(){ m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  items.forEach(function(g,i){
+    g.tabIndex=0; g.setAttribute('role','button');
+    g.addEventListener('click',function(){ show(i); });
+    g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); show(i); } });
+  });
+  m.addEventListener('click',function(e){
+    if(e.target===m||e.target.classList.contains('pclose')) close();
+    var d=e.target.getAttribute&&e.target.getAttribute('data-d');
+    if(d) show(cur+parseInt(d,10));
+  });
+  document.addEventListener('keydown',function(e){
+    if(!m.classList.contains('open')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowRight') show(cur+1);
+    if(e.key==='ArrowLeft') show(cur-1);
+  });
 })();
 </script>
 </body>
