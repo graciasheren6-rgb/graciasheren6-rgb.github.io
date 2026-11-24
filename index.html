@@ -185,7 +185,10 @@ nav .links a.active::after{width:100%}
 
 /* ===== BARU 2: planet data di Contact ===== */
 .contact{position:relative;overflow:hidden;padding-bottom:300px}
-.contact .wrap{position:relative;z-index:2}
+/* FIX: .wrap tidak jadi acuan posisi, jadi planet dihitung dari section .contact */
+.contact .wrap{position:static}
+/* FIX: teks, judul, dan tombol naik di atas planet */
+.contact .reveal{position:relative;z-index:2}
 .planet{position:absolute;left:50%;bottom:-440px;width:700px;height:700px;margin-left:-350px;border-radius:50%;
   background:
     radial-gradient(circle at 35% 25%,rgba(255,255,255,.4),transparent 40%),
