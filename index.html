@@ -1,36 +1,217 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sheren Gracia Theodora</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; color: #222; line-height: 1.6; }
-    header { background: #1f2a44; color: white; padding: 60px 20px; text-align: center; }
-    header h1 { margin: 0 0 8px; }
-    section { max-width: 700px; margin: 40px auto; padding: 0 20px; }
-    h2 { border-bottom: 2px solid #1f2a44; padding-bottom: 6px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheren Gracia Theodora | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1f4d36;--dark:#163a29;--orange:#f5a300;--bg:#fbf8f2;--text:#1d1d1d;--muted:#6b6b6b}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+section{padding:70px 0}
+.tag{color:var(--orange);font-weight:600;font-size:14px;margin-bottom:6px}
+h2{font-size:30px;line-height:1.25;margin-bottom:30px}
+h2 span{color:var(--orange);font-style:italic}
+.c{text-align:center}
+.btn{display:inline-block;padding:11px 24px;border-radius:30px;font-weight:600;font-size:14px;background:var(--green);color:#fff;border:2px solid var(--green)}
+.btn.out{background:transparent;color:var(--green)}
+.btn.or{background:var(--orange);border-color:var(--orange);color:#000}
+nav{position:sticky;top:12px;z-index:10;max-width:1000px;margin:12px auto 0;background:var(--green);border-radius:40px;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+nav b{font-size:18px}
+nav .links{display:flex;gap:22px;font-size:13px}
+nav .links a:hover{color:var(--orange)}
+.hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;padding:60px 0 70px}
+.hero .txt{flex:1;min-width:280px}
+.hello{display:inline-block;border:1.5px dashed var(--green);padding:2px 12px;font-size:13px;margin-bottom:14px}
+.hero h1{font-size:40px;line-height:1.2;margin-bottom:14px}
+.hero h1 span{color:var(--orange)}
+.hero p{color:var(--muted);margin-bottom:24px;max-width:480px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.photo{width:280px;height:280px;border-radius:50%;background:var(--orange);overflow:hidden;margin:0 auto;border:6px solid var(--orange)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:top}
+.strip{background:var(--orange);overflow:hidden;white-space:nowrap;padding:14px 0;font-weight:600}
+.strip div{display:inline-block;animation:run 24s linear infinite}
+.strip span{margin:0 26px}
+@keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card .ic{font-size:26px;margin-bottom:10px}
+.card h3{font-size:17px;margin-bottom:6px}
+.card p{font-size:14px;color:var(--muted)}
+.about{background:var(--green);color:#fff}
+.about .in{display:flex;gap:40px;align-items:center;flex-wrap:wrap}
+.about .txt{flex:1;min-width:280px}
+.about p{color:#d9e6de;margin-bottom:24px;font-size:14px}
+.stats{display:flex;gap:34px;margin-bottom:26px;flex-wrap:wrap}
+.stats b{display:block;font-size:28px;color:var(--orange)}
+.stats small{color:#d9e6de}
+.tools{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.tool{background:#fff;border-radius:50px;padding:14px 22px;text-align:center;min-width:110px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.tool b{display:block;font-size:18px;color:var(--green)}
+.tool small{color:var(--muted)}
+.proj{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.thumb{height:130px;background:linear-gradient(135deg,var(--green),var(--dark));display:flex;align-items:center;justify-content:center;color:var(--orange);font-weight:700;font-size:20px;text-align:center;padding:10px}
+.body{padding:18px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pills span{background:var(--orange);font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px}
+.proj h3{font-size:16px;margin-bottom:6px}
+.proj p{font-size:13px;color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.box{background:#fff;border-radius:14px;padding:24px}
+.box h3{margin-bottom:14px}
+.item{margin-bottom:14px;padding-left:12px;border-left:3px solid var(--orange)}
+.item small{color:var(--muted);display:block;font-size:12px}
+.item b{font-size:14px}
+.item p{font-size:13px;color:var(--muted)}
+.award{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.award .m{font-size:28px}
+.award b{display:block;font-size:15px}
+.award small{color:var(--orange);font-weight:600}
+.award p{font-size:13px;color:var(--muted)}
+.contact{background:var(--green);color:#fff;text-align:center}
+.contact p{color:#d9e6de;margin-bottom:24px}
+.contact .btns{justify-content:center}
+footer{background:var(--dark);color:#b9cbc0;text-align:center;padding:18px;font-size:12px}
+@media(max-width:700px){nav .links{display:none}.hero h1{font-size:30px}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Sheren Gracia Theodora</h1>
-    <p>Statistics Student | Data Science Enthusiast</p>
-  </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Mahasiswa Statistika ITS yang suka data science dan machine learning.</p>
-  </section>
+<nav>
+  <b>Sheren.</b>
+  <div class="links">
+    <a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a>
+    <a href="#awards">Achievements</a><a href="#experience">Experience</a>
+  </div>
+  <a class="btn or" href="#contact">Contact Me</a>
+</nav>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <p>Project kamu bakal muncul di sini.</p>
-  </section>
+<header class="wrap hero" id="home">
+  <div class="txt">
+    <div class="hello">Hello There!</div>
+    <h1>I’m <span>Sheren Gracia Theodora</span>, Statistics Student.</h1>
+    <p>Mahasiswa Statistika ITS yang tertarik mengubah data jadi keputusan yang bermakna, lewat data analysis, machine learning, dan kerja tim di berbagai organisasi.</p>
+    <div class="btns">
+      <a class="btn" href="#projects">View My Portfolio</a>
+      <a class="btn out" href="#contact">Hire Me</a>
+    </div>
+  </div>
+  <div class="photo"><img src="foto.jpg" alt="Sheren Gracia Theodora"></div>
+</header>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email / LinkedIn / GitHub</p>
-  </section>
+<div class="strip"><div>
+  <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
+  <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
+  <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
+  <span>✳ Data Analysis</span><span>✳ Machine Learning</span><span>✳ Statistics</span><span>✳ Case Competition</span><span>✳ Leadership</span>
+</div></div>
+
+<section id="about" class="about"><div class="wrap in">
+  <div class="photo" style="width:240px;height:240px"><img src="foto.jpg" alt="Sheren"></div>
+  <div class="txt">
+    <div class="tag">• About Me</div>
+    <h2>Who is <span>Sheren?</span></h2>
+    <p>Mahasiswa semester 3 Statistika di Institut Teknologi Sepuluh Nopember (ITS), Surabaya. Aku tertarik memahami kebutuhan stakeholder, membangun relasi profesional, dan ikut proyek yang berdampak secara teknis maupun sosial. Adaptif, proaktif, dan berorientasi hasil. Aku merantau sejak SMA, jadi terbiasa cepat beradaptasi di lingkungan baru.</p>
+    <div class="stats">
+      <div><b>3.51</b><small>GPA (36 SKS)</small></div>
+      <div><b>4</b><small>Awards &amp; Finalist</small></div>
+      <div><b>5+</b><small>Organizations</small></div>
+    </div>
+    <a class="btn or" href="#contact">Get In Touch</a>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="tag c">• Skills</div>
+  <h2 class="c">Tools &amp; <span>Languages</span></h2>
+  <div class="tools">
+    <div class="tool"><b>SQL</b><small>Advanced</small></div>
+    <div class="tool"><b>HTML/CSS</b><small>Advanced</small></div>
+    <div class="tool"><b>Python</b><small>Proficient</small></div>
+    <div class="tool"><b>MATLAB</b><small>Proficient</small></div>
+    <div class="tool"><b>Machine Learning</b><small>Proficient</small></div>
+    <div class="tool"><b>English</b><small>IELTS 6.0</small></div>
+    <div class="tool"><b>Chinese</b><small>HSK 3</small></div>
+  </div>
+</div></section>
+
+<section id="projects" style="padding-top:0"><div class="wrap">
+  <div class="tag">• My Portfolio</div>
+  <h2>My Latest <span>Projects</span></h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+    <div class="proj"><div class="thumb">Stroke Prediction Model</div><div class="body">
+      <div class="pills"><span>Machine Learning</span><span>Python</span><span>SHAP</span></div>
+      <h3>Class Imbalance Handling</h3>
+      <p>Menganalisis dataset stroke yang sangat tidak seimbang (4.87% kasus positif), membandingkan 7 model klasifikasi dengan SMOTE dan scale_pos_weight. XGBoost terbaik dengan ROC-AUC 0.8521, diinterpretasi pakai SHAP.</p>
+    </div></div>
+    <div class="proj"><div class="thumb">ReEnerX</div><div class="body">
+      <div class="pills"><span>Energy</span><span>Paper &amp; Poster</span></div>
+      <h3>Waste Heat Recovery System</h3>
+      <p>Sistem hybrid PCM-TEG dan ISORC untuk memanfaatkan panas buangan dari flare gas dan data center. Juara 2 Paper &amp; Poster SPE.</p>
+    </div></div>
+    <div class="proj"><div class="thumb">AlgaTech</div><div class="body">
+      <div class="pills"><span>Infographic</span><span>Data Analysis</span></div>
+      <h3>Microalgae for CO2 Emissions</h3>
+      <p>Infografis solusi berbasis mikroalga untuk emisi CO2 industri dan limbah cair, dari analisis data emisi global sampai Indonesia. Juara 3 ISECO 2026.</p>
+    </div></div>
+    <div class="proj"><div class="thumb">3S Strategy</div><div class="body">
+      <div class="pills"><span>Case Competition</span><span>Financial Model</span></div>
+      <h3>Digital Land Governance</h3>
+      <p>Framework tata kelola lahan digital untuk ASEAN dengan transparansi berbasis blockchain, Geoportal, dan FPIC Tracker, lengkap dengan NPV, IRR, dan ROI. Finalis ASEAN Case Competition UGM.</p>
+    </div></div>
+  </div>
+</div></section>
+
+<section id="awards" style="padding-top:0"><div class="wrap">
+  <div class="tag c">• Honors &amp; Awards</div>
+  <h2 class="c">My <span>Achievements</span></h2>
+  <div class="award"><div class="m">🥉</div><div><b>Third Place, Infographic Competition (ISECO 2026)</b><small>UNSOED · Oktober 2026</small><p>Tim Trio Maut, dari riset data sampai desain visual “AlgaTech”.</p></div></div>
+  <div class="award"><div class="m">🥈</div><div><b>Second Place, Short Video Competition (BNYC 2026)</b><small>Universitas Brawijaya · September 2026</small><p>Video bertema Impactful Business: inovasi untuk ekonomi inklusif dan berkelanjutan.</p></div></div>
+  <div class="award"><div class="m">🥈</div><div><b>First Runner-Up, Paper &amp; Poster (SPE)</b><small>Society of Petroleum Engineers · Desember 2025</small><p>Mengusulkan ReEnerX, sistem hybrid PCM-TEG dan ISORC untuk waste heat recovery.</p></div></div>
+  <div class="award"><div class="m">🏅</div><div><b>Finalist, ASEAN Case Competition</b><small>Universitas Gadjah Mada · Februari 2026</small><p>Mengembangkan “3S Strategy” untuk tata kelola lahan digital di konteks ASEAN.</p></div></div>
+</div></section>
+
+<section id="experience" style="padding-top:0"><div class="wrap">
+  <div class="tag c">• Education &amp; Experience</div>
+  <h2 class="c">My Academic and <span>Organizational</span> Journey</h2>
+  <div class="two">
+    <div class="box"><h3>🎓 Education</h3>
+      <div class="item"><b>Institut Teknologi Sepuluh Nopember (ITS)</b><small>B.S. Statistics · 2025 - 2029</small><p>GPA 3.51/4.00 (36 credits)</p></div>
+      <div class="item"><b>SMA Katolik Rajawali Makassar</b><small>2022 - 2025</small><p>Overall grade 92.1, ranking 24</p></div>
+      <h3 style="margin-top:20px">📜 Training</h3>
+      <div class="item"><b>LKMM-TD</b><small>Mei 2026</small><p>Pelatihan kepemimpinan, kerja tim, dan perencanaan event.</p></div>
+    </div>
+    <div class="box"><h3>💼 Organizations</h3>
+      <div class="item"><b>Staff of Sponsorship · SRE ITS</b><small>September 2026</small></div>
+      <div class="item"><b>Student Speaker · CommTECH Camp Highlight 2026</b><small>September 2026</small><p>Presentasi 40 menit dalam bahasa Inggris untuk 33 delegasi internasional dari 15+ negara.</p></div>
+      <div class="item"><b>Staff of Event Competition · TDC Summit Fest</b><small>Juni - Oktober 2026</small><p>Menyusun konsep, timeline, dan sistem penilaian kompetisi BPC dan BCC.</p></div>
+      <div class="item"><b>Kakak Bimbingan · TDC ITS</b><small>Juni - Oktober 2026</small></div>
+      <div class="item"><b>Staff of Material · Data Science Course</b><small>Mei - Juli 2026</small><p>Menyusun modul dan materi data science dasar.</p></div>
+      <div class="item"><b>Staff of Berkas · TDC ITS</b><small>Mei - Agustus 2026</small></div>
+      <div class="item"><b>Staff of Logistic · PMK</b><small>Maret 2026 - sekarang</small></div>
+      <div class="item"><b>Staff of Corporation · TDC ITS</b><small>Februari 2026 - sekarang</small></div>
+      <div class="item"><b>Member · TDC ITS</b><small>September 2025 - Januari 2026</small></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <div class="tag">• Contact</div>
+  <h2>Let’s Talk <span>Together</span></h2>
+  <p>Punya proyek, peluang magang, atau mau kolaborasi? Hubungi aku di Surabaya, Jawa Timur.</p>
+  <div class="btns">
+    <a class="btn or" href="mailto:graciasheren6@gmail.com">Email</a>
+    <a class="btn or" href="https://www.linkedin.com/in/username-linkedin-kamu" target="_blank">LinkedIn</a>
+    <a class="btn or" href="https://github.com/graciasheren6-rgb" target="_blank">GitHub</a>
+    <a class="btn or" href="Cv_sheren.pdf" target="_blank">Download CV</a>
+  </div>
+</div></section>
+
+<footer>© 2026 Sheren Gracia Theodora. All Rights Reserved.</footer>
+
 </body>
 </html>
